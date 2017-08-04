@@ -1,0 +1,316 @@
+<html lang="es"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <title>Tetris</title> 
+     
+    <script> 
+    var Pieza = function(formas, x, y){ 
+        this.formas = formas; 
+        this.actual=0; 
+        this.x=x; 
+        this.y=y; 
+        self=this; 
+         
+        this.rotar=function(){ 
+            self.actual=self.actual+1; 
+            if(self.actual >= self.formas.length){ 
+                self.actual=0; 
+            } 
+        } 
+    } 
+     
+    var tablero_render = (function(){ 
+        var colores = [ 
+            "#FFF",//0 
+            "#F00",//1 
+            "#0F0",//2 
+            "#00F",//3 
+            "#F0F",//4 
+            "#FF0",//6 
+            "#0FF",//5 
+            "#CCC",//7 
+            "#FFF",//8 
+            "#555" //9 
+        ]; 
+ 
+        var pintar_cuadro = function(contexto,color,x,y){ 
+            contexto.fillStyle=color; 
+            contexto.fillRect((x*20)+0.5,(y*20)+0.5,20,20); 
+            contexto.strokeRect((x*20)+0.5,(y*20)+0.5,20,20); 
+        } 
+     
+        var pintar_tablero = function(contexto, tablero){ 
+            contexto.strokeStyle='#CCC'; 
+            for(y=0;y<tablero.length;y++){ 
+                for(x=0;x<tablero[y].length;x++){ 
+                    pintar_cuadro(contexto,colores[ tablero[y][x] ],x,y); 
+                } 
+            } 
+        }; 
+         
+        var pintar_pieza=function(contexto, pieza){ 
+            var matriz = pieza.formas[pieza.actual]; 
+            for(y=0;y<matriz.length;y++){ 
+                for(x=0;x<matriz[y].length;x++){ 
+                    if(matriz[y][x]!=0) 
+                        pintar_cuadro(contexto,colores[ matriz[y][x] ],x+pieza.x,y+pieza.y); 
+                } 
+            } 
+        } 
+         
+        return { 
+            render: function(objetivo, tablero, pieza){ 
+                var contexto=objetivo.getContext('2d'); 
+                if(contexto){ 
+                    pintar_tablero(contexto, tablero); 
+                    if( pieza ) 
+                        pintar_pieza(contexto, pieza) 
+                }else{ 
+                    console.error("objetivo no inicializado, no se puede pintar"); 
+                } 
+            } 
+        }; 
+    })(); 
+     
+    var piezas_factory = (function(){ 
+        var palo = [ 
+            [[1,1,1,1]], 
+            [[1], 
+             [1], 
+             [1], 
+             [1]] 
+        ]; 
+        var cuadro = [ 
+            [[2,2], 
+             [2,2]] 
+        ]; 
+        var jota=[ 
+            [[3,3], 
+             [3], 
+             [3]], 
+            [[3,3,3], 
+             [0,0,3]], 
+            [[0,3], 
+             [0,3], 
+             [3,3]], 
+            [[3], 
+             [3,3,3]] 
+        ]; 
+        var ele=[ 
+            [[4,4], 
+             [0,4], 
+             [0,4]], 
+            [[0,0,4], 
+             [4,4,4]], 
+            [[4], 
+             [4], 
+             [4,4]], 
+            [[4,4,4], 
+             [4]], 
+        ]; 
+        var ese=[ 
+            [[0,5,5], 
+             [5,5]], 
+            [[5], 
+             [5,5], 
+             [0,5]] 
+        ]; 
+        var zeta=[ 
+            [[6,6], 
+             [0,6,6]], 
+            [[0,6], 
+             [6,6], 
+             [6]] 
+        ]; 
+        var te=[ 
+            [[7], 
+             [7,7], 
+             [7]], 
+            [[7,7,7], 
+             [0,7]], 
+            [[0,7], 
+             [7,7], 
+             [0,7]], 
+            [[0,7], 
+             [7,7,7]] 
+        ]; 
+         
+        var piezas = [palo, cuadro, jota, ele, ese, zeta, te]; 
+         
+        return { 
+            pieza_aleatoria:function(){ 
+                var siguiente = Math.floor((Math.random()*10%7)) 
+                console.log("siguiente: "+ siguiente); 
+                return new Pieza(piezas[siguiente], 4, 0); 
+            } 
+        }; 
+    })(); 
+     
+    var tetris = (function(){ 
+        var tablero = [ 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,0,0,0,0,0,0,0,0,0,9], 
+            [9,9,9,9,9,9,9,9,9,9,9] 
+        ]; 
+         
+        var pieza_actual; 
+        var canvas_obj; 
+         
+        var comprobar_colision = function(forma, n_x, n_y){ 
+            for(y=0;y<pieza_actual.formas[forma].length;y++){ 
+                for(x=0; x<pieza_actual.formas[forma][y].length;x++){ 
+                    if( tablero[y+n_y][x+n_x] != 0 && pieza_actual.formas[forma][y][x] != 0){ 
+                        return true; 
+                    } 
+                } 
+            } 
+            return false; 
+        } 
+         
+        var fijar_pieza = function(){ 
+            for(y=0;y<pieza_actual.formas[pieza_actual.actual].length;y++){ 
+                for(x=0; x<pieza_actual.formas[pieza_actual.actual][y].length;x++){ 
+                    if(pieza_actual.formas[pieza_actual.actual][y][x]!=0) 
+                        tablero[y+pieza_actual.y][x+pieza_actual.x] = pieza_actual.formas[pieza_actual.actual][y][x]; 
+                } 
+            } 
+        } 
+         
+        var comprobar_lineas = function(){ 
+            //hay que quitar las lineas 
+            var completa,x; 
+            var a_eliminar = []; 
+            for(y=0;y<tablero.length-1;y++){ 
+                completa = true; 
+                x=1; 
+                while(completa && x<tablero[y].length-1){ 
+                    if( tablero[y][x] == 0 ){ 
+                        completa=false; 
+                    } 
+                    x++; 
+                } 
+                 
+                if(completa){ 
+                    a_eliminar.push(y); 
+                } 
+            } 
+             
+            //de abajo arriba para simular la gravedad 
+            a_eliminar = a_eliminar.sort().reverse(); 
+             
+            for(i=0; i<a_eliminar.length;i++){ 
+                for(y=a_eliminar[i]+i; y>1; y--){ 
+                    for(x=1;x<tablero[y].length-1;x++){ 
+                        tablero[y][x] = tablero[y-1][x]; 
+                    } 
+                } 
+            } 
+        } 
+         
+        var comprobar_fin_del_juego = function(){ 
+            //si nada más añadir la pieza colisiona es que se ha acabado el juego 
+            if( comprobar_colision(pieza_actual.actual, pieza_actual.x, pieza_actual.y) ){ 
+                clearInterval(intervalo); 
+                pieza_actual=null; 
+                alert("Fin del juego"); 
+            } 
+        } 
+         
+        var intervalo; 
+        var abajo = function(){ 
+            //comprobación de colision 
+            if( !comprobar_colision(pieza_actual.actual, pieza_actual.x, pieza_actual.y+1) ){ 
+                pieza_actual.y += 1; 
+            }else{ 
+                //la pieza se asienta 
+                fijar_pieza(); 
+                comprobar_lineas(); 
+                pieza_actual = piezas_factory.pieza_aleatoria(); 
+                comprobar_fin_del_juego(); 
+            } 
+            tablero_render.render(canvas_obj, tablero, pieza_actual); 
+        } 
+         
+        return { 
+            iniciar_juego:function(el){ 
+                canvas_obj=el; 
+                if(!pieza_actual){ 
+                    pieza_actual = piezas_factory.pieza_aleatoria(); 
+                } 
+                tablero_render.render(canvas_obj, tablero, pieza_actual); 
+                intervalo=setInterval(abajo,1000); 
+            }, 
+            rotar_pieza:function(){ 
+                //aqui tambien tenemos que validar la colisión 
+                var nueva_posicion = pieza_actual.actual+1; 
+                if( nueva_posicion >= pieza_actual.formas.length ){ 
+                    nueva_posicion=0; 
+                } 
+                if( !comprobar_colision(nueva_posicion, pieza_actual.x, pieza_actual.y) ){ 
+                    pieza_actual.rotar(); 
+                    tablero_render.render(canvas_obj, tablero, pieza_actual); 
+                } 
+            }, 
+            mover_derecha:function(){ 
+                //comprobación de colision 
+                if( !comprobar_colision(pieza_actual.actual, pieza_actual.x+1, pieza_actual.y) ){ 
+                    pieza_actual.x += 1; 
+                    tablero_render.render(canvas_obj, tablero, pieza_actual); 
+                } 
+            }, 
+            mover_izquierda:function(){ 
+                //comprobación de colision 
+                if( !comprobar_colision(pieza_actual.actual, pieza_actual.x-1, pieza_actual.y)){ 
+                    pieza_actual.x -= 1; 
+                    tablero_render.render(canvas_obj, tablero, pieza_actual); 
+                } 
+            }, 
+            mover_abajo:function(){ 
+                abajo(); 
+            } 
+        }; 
+    })(); 
+     
+    window.addEventListener('load',function(){ 
+        tetris.iniciar_juego(document.getElementById('tablero')); 
+        document.addEventListener('keydown',function(){ 
+            switch(window.event.keyCode){ 
+                case 37: 
+                    tetris.mover_izquierda(); 
+                break; 
+                case 38: 
+                    tetris.rotar_pieza(); 
+                break; 
+                case 39: 
+                    tetris.mover_derecha(); 
+                break; 
+                case 40: 
+                    tetris.mover_abajo(); 
+                break; 
+            } 
+        }, false); 
+    },false); 
+    </script> 
+</head> 
+<body> 
+    <h1>Tetris</h1> 
+    <canvas id="tablero" width="221" height="401"></canvas> 
+</body> 
+</html> 

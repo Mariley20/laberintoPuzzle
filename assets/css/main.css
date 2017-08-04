@@ -1,0 +1,25 @@
+.pared {
+	background-color: #0B0A0A;
+}
+.camino {
+	background-color: #FFFFFF;
+	color: #FFFFFF;
+}
+.inicioFin {
+	background-color: #F5F805;
+	color: #FC0505;
+}
+table {
+	width: 50%;
+	height: 70%;
+	text-align: center;
+}
+
+/* nuevo cubo rotador*/
+.cubo {
+  animation: rotate 2s infinite linear;
+}
+@keyframes rotate {
+    0% { transform: rotateX(   0deg ) rotateY(   0deg ); }
+  100% { transform: rotateX( 360deg ) rotateY( 360deg ); }
+}
