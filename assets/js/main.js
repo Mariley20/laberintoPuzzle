@@ -163,3 +163,42 @@ function removeImg(direccion, idTagPadre, estilo){
 				//var value_TD = document.createTextNode(img);
 				document.getElementById(direccion).appendChild(img);
 }
+function caminaSolito(){
+	var idTagPadre = document.getElementById('img').parentNode.id;
+	idTag = idTagPadre.split('');
+	if(idTag.length == 3){
+		idTag[1] = idTag[1]+""+idTag[2];
+	}
+	(idTagPadre == '916')?alert('Ganaste'):console.log(idTagPadre)
+	
+	var derecha   = idTag[0] +""+ (parseInt(idTag[1])+1);
+	var izquierda = idTag[0] +""+ (parseInt(idTag[1]) - 1);
+	var arriba    = (parseInt(idTag[0]) - 1) +""+ idTag[1];
+	var abajo     = (parseInt(idTag[0]) + 1) +""+ idTag[1];
+
+	var estilo    = document.getElementById('img').style.transform;
+
+	var derechaValor   = document.getElementById(derecha).textContent;
+	var izquierdaValor = document.getElementById(izquierda).textContent;
+	var arribaValor    = document.getElementById(arriba).textContent;
+	var abajoValor     = document.getElementById(abajo).textContent;
+	var direccion;
+	console.log(izquierdaValor+'*'+arribaValor);
+	if(izquierdaValor == '*' && arribaValor == "_"){
+		direccion = arriba;
+		removeImg(direccion, idTagPadre, estilo);
+	}
+	if(arribaValor == "*" && derechaValor=='_'){
+		direccion = derecha;
+		removeImg(direccion, idTagPadre, estilo);
+	}
+	if (derechaValor=='*' && abajoValor=='_') {
+		direccion = abajo;
+		removeImg(direccion, idTagPadre, estilo);
+	}
+	if (abajoValor == '*' && izquierdaValor=='_') {
+		direccion = arriba;
+		removeImg(direccion, idTagPadre, estilo);
+	}
+
+}
