@@ -39,8 +39,8 @@ table {
 }
 #img {
 	background-color: bisque;
-	position: absolute;
+	position: inherit; /*absolute;
 	left: 24px;
-    top: 212px;
+    top: 212px;*/
     z-index: 2;
 }
