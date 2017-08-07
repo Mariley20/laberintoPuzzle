@@ -4,22 +4,43 @@
 .camino {
 	background-color: #FFFFFF;
 	color: #FFFFFF;
+	z-index: 1;
 }
 .inicioFin {
 	background-color: #F5F805;
 	color: #FC0505;
+	z-index: 1;
 }
 table {
 	width: 50%;
 	height: 70%;
 	text-align: center;
 }
-
-/* nuevo cubo rotador*/
-.cubo {
-  animation: rotate 2s infinite linear;
+.div {
+	width: 15px;
+    height: 15px;
+    background-color: #ec00ff;
+    -ms-transform: rotate(7deg);
+    -webkit-transform: rotate(7deg);
+    transform: rotate(90deg);
+    position: absolute;
+    left: 26px;
+    top: 212px;
+    z-index: 2;
 }
-@keyframes rotate {
-    0% { transform: rotateX(   0deg ) rotateY(   0deg ); }
-  100% { transform: rotateX( 360deg ) rotateY( 360deg ); }
+.rotar90 {
+	width: 10px;
+    height: 10px;
+    background-color: yellow;
+    /* Rotate div */
+    -ms-transform: rotate(7deg); /* IE 9 */
+    -webkit-transform: rotate(7deg); /* Chrome, Safari, Opera */
+     transform: rotate(90deg);
+}
+#img {
+	background-color: bisque;
+	position: absolute;
+	left: 24px;
+    top: 212px;
+    z-index: 2;
 }
