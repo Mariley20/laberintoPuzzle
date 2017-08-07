@@ -46,6 +46,7 @@ for (var i = 0; i < mapa.length; i++) {
 }
 
 var contadorRotando = 0;
+var p = 0;
 var btnRotarDerecha = document.getElementById('rotarDerecha')
 btnRotarDerecha.onclick = function(){
 	if(p == 1){contadorRotando++;
@@ -60,7 +61,7 @@ btnRotarDerecha.onclick = function(){
 	contadorRotando++;
 
 }
-var p = 0;
+
 var btnRotarIzquierda = document.getElementById('rotarIzquierda');
 btnRotarIzquierda.onclick = function(){
 	var x=0;
@@ -73,7 +74,7 @@ btnRotarIzquierda.onclick = function(){
 		contadorRotando = 4;
 	}
 	contadorRotando--;
-	//console.log(contadorRotando)
+	console.log(contadorRotando)
 	rotar(contadorRotando);
 	
 	//
@@ -110,7 +111,9 @@ btnAvanzar.onclick = function(){
 	var izquierda = idTag[0] +""+ (parseInt(idTag[1]) - 1);
 	var arriba    = (parseInt(idTag[0]) - 1) +""+ idTag[1];
 	var abajo     = (parseInt(idTag[0]) + 1) +""+ idTag[1];
+
 	var estilo    = document.getElementById('img').style.transform;
+
 	var derechaValor   = document.getElementById(derecha).textContent;
 	var izquierdaValor = document.getElementById(izquierda).textContent;
 	var arribaValor    = document.getElementById(arriba).textContent;
@@ -149,7 +152,8 @@ btnAvanzar.onclick = function(){
 		
 }
 
-function removeImg(direccion, idTagPadre,estilo){
+function removeImg(direccion, idTagPadre, estilo){
+	//-- Remove imagen
 	var contenedorImg = document.getElementById(idTagPadre);
 				contenedorImg.removeChild(contenedorImg.childNodes[1]);
 	var img = document.createElement('img');
