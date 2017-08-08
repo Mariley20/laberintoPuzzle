@@ -28,7 +28,7 @@ for (var i = 0; i < mapa.length; i++) {
             clase = 'camino    ';
         } else if (pared[j] == "o") {
             clase = 'inicioFin';
-            var img = document.createElement('');
+            var img = document.createElement('img');
             img.setAttribute('src', 'assets/icn/flecha_arriba.png');
             img.setAttribute('id', 'img');
             img.setAttribute('style', 'transform:rotate(360deg)');
