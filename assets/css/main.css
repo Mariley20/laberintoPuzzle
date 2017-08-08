@@ -12,8 +12,6 @@
 	z-index: 1;
 }
 table {
-	width: 50%;
-	height: 70%;
 	text-align: center;
 }
 .div {
@@ -28,19 +26,29 @@ table {
     top: 212px;
     z-index: 2;
 }
-.rotar90 {
-	width: 10px;
-    height: 10px;
-    background-color: yellow;
-    /* Rotate div */
-    -ms-transform: rotate(7deg); /* IE 9 */
-    -webkit-transform: rotate(7deg); /* Chrome, Safari, Opera */
-     transform: rotate(90deg);
+
+td {
+    height: 20px;
+    width: 25px
 }
-#img {
+/*#img {
 	background-color: bisque;
-	position: inherit; /*absolute;
-	left: 24px;
-    top: 212px;*/
+	position: inherit;
     z-index: 2;
+}*/
+.rotar90 {
+     background-image: url(../icn/flecha_derecha.png);
+     background-color: bisque;
+}
+.rotar360 {
+    background-image: url(../icn/flecha_arriba.png);
+    background-color: bisque;
+}
+.rotar180 {
+    background-image: url(../icn/flecha_abajo.png)
+    background-color: bisque;
+}
+.rotar180 {
+    background-image: url(../icn/flecha_izquierda.png)
+    background-color: bisque;
 }
