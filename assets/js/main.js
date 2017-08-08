@@ -47,14 +47,16 @@ var contadorRotando = 0;
 var p = 0;
 var btnRotarDerecha = document.getElementById('rotarDerecha')
 btnRotarDerecha.onclick = function () {
+    //huella pulso tecla izquierda
     if (p == 1) {
         contadorRotando++;
         p = 0;
     }
+    //reinicializa el contador (img dio vuelta completa)
     if (contadorRotando == 4) {
         contadorRotando = 0;
     }
-    //console.log(contadorRotando);
+    
     rotar(contadorRotando);
 
     contadorRotando++;
@@ -63,7 +65,7 @@ btnRotarDerecha.onclick = function () {
 
 var btnRotarIzquierda = document.getElementById('rotarIzquierda');
 btnRotarIzquierda.onclick = function () {
-    var x = 0;
+   //huella que pulso boton derecho
     if (p == 0) {
         (contadorRotando == 0) ? p = 1: contadorRotando--;
         p = 1;
@@ -73,10 +75,7 @@ btnRotarIzquierda.onclick = function () {
         contadorRotando = 4;
     }
     contadorRotando--;
-    console.log(contadorRotando)
     rotar(contadorRotando);
-
-    //
 }
 
 function rotar(c) {
@@ -101,6 +100,7 @@ var btnAvanzar = document.getElementById('avanzar');
 btnAvanzar.onclick = function () {
     var idTagPadre = document.getElementById('img').parentNode.id;
     idTag = idTagPadre.split('');
+    
     if (idTag.length == 3) {
         idTag[1] = idTag[1] + "" + idTag[2];
     }
